@@ -424,6 +424,12 @@ class TestCoralBricksPricing:
         assert CORALBRICKS_ROWS, "no coralbricks rows in model_prices_and_context_window.json"
         assert _coralbricks_rows("litellm/model_prices_and_context_window_backup.json") == CORALBRICKS_ROWS
 
+    def test_the_rows_are_exactly_the_models_coralbricks_serves(self):
+        assert set(CORALBRICKS_ROWS) == {
+            "coralbricks/glm-5.3-fp4",
+            "coralbricks/deepseek-v4.1-flash-fast-fp4",
+        }
+
     @pytest.mark.parametrize("model", sorted(CORALBRICKS_ROWS))
     def test_every_row_prices_both_cache_buckets_and_advertises_caching(self, model):
         from litellm.utils import supports_prompt_caching
